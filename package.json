@@ -1,0 +1,22 @@
+{
+  "name": "amarlatrama",
+  "version": "1.0.0",
+  "description": "Adathon 2020. Api Rest para mejorar la comunicacion de las artesanas Wichi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lauriacunia/amarlatrama.git"
+  },
+  "author": "Laura Acuña",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lauriacunia/amarlatrama/issues"
+  },
+  "homepage": "https://github.com/Lauriacunia/amarlatrama#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
