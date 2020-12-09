@@ -52,7 +52,7 @@ app.get('*', (req,res) => {
  **◇*◆*◇*◆*◇*◆*◇*◆*◇*◆**◇*◆*◇*◆*◇*◆*◇*◆*◇*◆* */
 
 //Registro de una artesana
-app.put('/artesanas/:name/:phone', (req,res) => {
+app.post('/artesanas', (req,res) => {
     let body = req.body
     res.send(`<b style="color:crimson;">Se registro con exito a la artesana: ${body}</b>`)
 })
@@ -83,7 +83,7 @@ app.put('/artesanas/:id', (req,res) => {
 // Delete by Id --> Borra una artesana por Id
 
 app.delete('/artesanas/:id', (req,res) => {
-    let id = req.params.indice
+    let id = req.params.id
     res.send(`<b style="color:crimson;">La artesana con el id: ${id} fue borrada de la db</b>`)
 })
 
