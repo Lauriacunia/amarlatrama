@@ -39,6 +39,19 @@ app.get('/artesanas/:name/:phone?', (req,res) => {
   res.send(`<b>Buscando artesana por nombre o telefono</b>`) 
 })
 
+// get all --> devuelve todo el listado de pedidos de todas las comunidades
+
+app.get('/pedidos', (req,res) => {
+    res.send(`<b>Estos son todos los pedidos</b>`) 
+  })
+
+
+// get pedidos por comunidad
+
+app.get('/pedidos/:comunidad', (req,res) => {
+    res.send(`<b>Estos son todos los pedidos de tu comunidad</b>`) 
+  })
+
 /* ----------------------------------------------------- */
 
 app.get('*', (req,res) => {
@@ -56,6 +69,13 @@ app.post('/artesanas', (req,res) => {
     let body = req.body
     res.send(`<b style="color:crimson;">Se registro con exito a la artesana: ${body}</b>`)
 })
+
+// Registro de un pedido
+
+app.post('/pedidos', (req,res) => {
+    let body = req.body
+    res.send(`<b style="color:crimson;">Se registro con exito el pedido: ${body}</b>`)
+  })
 
 /* ----------------------------------------------------- */
 app.post('*', (req,res) => {
@@ -76,6 +96,13 @@ app.put('/artesanas/:id', (req,res) => {
     res.send(`<b style="color:green;">La artesana con el id: ${id} fue actualizada en la db</b>`)
 })
 
+//Modificar un pedido por id
+app.put('/pedidos/:id', (req,res) => {
+    let id = req.params.id
+    res.send(`<b style="color:green;">El pedido con el id: ${id} fue actualizado con éxito en la db</b>`)
+})
+
+
  /***◇*◆*◇*◆*◇*◆*◇*◆*◇*◆**◇*◆*◇*◆*◇*◆*◇*◆*◇*◆*
  *                       DELETE
  **◇*◆*◇*◆*◇*◆*◇*◆*◇*◆**◇*◆*◇*◆*◇*◆*◇*◆*◇*◆* */
@@ -87,7 +114,12 @@ app.delete('/artesanas/:id', (req,res) => {
     res.send(`<b style="color:crimson;">La artesana con el id: ${id} fue borrada de la db</b>`)
 })
 
+// Borrar un pedido por id
 
+app.delete('/pedido/:id', (req,res) => {
+    let id = req.params.id
+    res.send(`<b style="color:crimson;">El pedido con el id: ${id} fue borrado de la db</b>`)
+})
 
 app.listen(port, () => {
     console.log(`Escuchando en http://localhost:${port}`)
