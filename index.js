@@ -122,7 +122,7 @@ app.delete('/pedidos/:id', (req,res) => {
 })
 
 
-mongoose.connect('mongodb+srv://niwok:YqTbwsTwT1FgBlCA@cluster0.cyfup.mongodb.net/niwok?retryWrites=true&w=majority', (err, res) => {
+mongoose.connect('mongodb+srv://niwok:***********@cluster0.cyfup.mongodb.net/niwok?retryWrites=true&w=majority', (err, res) => {
     if(err) {
         return console.log('Error al conectar con la base de datos')
     }
