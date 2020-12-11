@@ -29,7 +29,15 @@ app.use((req,res,next) => {
 
 // get all --> devuelve todas las artesanas
 app.get('/artesanas', (req, res) =>{
-    res.status(200).send({ message: 'todas las artesanas'})
+    Artesana.find({}, (err, artesanas) => {
+        if(err) return res.status(500).send({message: `Error al buscar  a todas las artesanas`})
+        if(!artesanas) return res.status(404).send({message: 'La artesanas buscadas no existen en nuestra base de datos'})
+
+        res.status(200).send({ artesanas })
+    })
+
+
+
 })
 
 // get by Id --> devuelve una artesana, busca por id
@@ -55,10 +63,16 @@ app.get('/artesanas/:name/:phone?', (req,res) => {
 // get all --> devuelve todo el listado de pedidos de todas las comunidades
 
 app.get('/pedidos', (req,res) => {
-    res.status(200).send(`<b>Estos son todos los pedidos</b>`) 
+    Pedido.find({}, (err, pedidos) => {
+        if(err) return res.status(500).send({message: `Error al buscar  a todos los pedidos`})
+        if(!pedidos) return res.status(404).send({message: 'Los pedidos buscados no existen en nuestra base de datos'})
+
+        res.status(200).send({ pedidos })
+    })
   })
 
 // get pedidos por id
+
 app.get('/pedidos/:id', (req,res) => {
     let pedidoId = req.params.id
 
