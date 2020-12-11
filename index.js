@@ -153,13 +153,25 @@ app.post('*', (req,res) => {
 
 app.put('/artesanas/:id', (req,res) => {
     let id = req.params.id
-    res.status(200).send(`<b style="color:green;">La artesana con el id: ${id} fue actualizada en la db</b>`)
+    let bodyUpdate = req.body
+
+    Artesana.findByIdAndUpdate(id, bodyUpdate, (err, artesanaUpdated) => {
+        if (err) res.status(500).send({message: `Error al actualizar los datos de la artesana: ${err}`})
+
+        res.status(200).send({ artesanaUpdated })
+    })
 })
 
 //Modificar un pedido por id
 app.put('/pedidos/:id', (req,res) => {
     let id = req.params.id
-    res.status(200).send(`<b style="color:green;">El pedido con el id: ${id} fue actualizado con éxito en la db</b>`)
+    let bodyUpdate = req.body
+
+    Pedido.findByIdAndUpdate(id, bodyUpdate, (err, pedidoUpdated) => {
+        if (err) res.status(500).send({message: `Error al actualizar los datos del pedido: ${err}`})
+
+        res.status(200).send({ pedidoUpdated })
+    })
 })
 
 
@@ -170,14 +182,32 @@ app.put('/pedidos/:id', (req,res) => {
 // Delete by Id --> Borra una artesana por Id
 
 app.delete('/artesanas/:id', (req,res) => {
-    let id = req.params.id
-    res.status(200).send(`<b style="color:crimson;">La artesana con el id: ${id} fue borrada de la db</b>`)
+    let artesanaId = req.params.id
+
+    Artesana.findById(artesanaId, (err, artesana) =>{
+        if(err) return res.status(500).send({message: `Error al buscar a la artesana por Id: ${id} `})
+
+        artesana.remove(err => {
+            if(err) res.status(500).send({message: `Error al borrar a la artesana de la DB: ${err}`})
+            res.status(200).send({message: 'La artesana ha sido borrada de nuestra DB'})
+        })
+        
+    })
 })
 
 // Borrar un pedido por id
 app.delete('/pedidos/:id', (req,res) => {
-    let id = req.params.id
-    res.status(200).send(`<b style="color:crimson;">El pedido con el id: ${id} fue borrado de la db</b>`)
+    let pedidoId = req.params.id
+
+    Pedido.findById(pedidoId, (err, pedido) =>{
+        if(err) return res.status(500).send({message: `Error al buscar el pedido por Id: ${id} `})
+
+        pedido.remove(err => {
+            if(err) res.status(500).send({message: `Error al borrar el pedido: ${err}`})
+            res.status(200).send({message: 'El pedido ha sido borrado'})
+        })
+        
+    })
 })
 
 
