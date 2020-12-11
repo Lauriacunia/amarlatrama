@@ -4,6 +4,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
+const Artesana = require('./models/artesana')
+const Pedido = require('./models/Pedido')
+
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -68,14 +71,36 @@ app.get('*', (req,res) => {
 //Registro de una artesana
 app.post('/artesanas', (req,res) => {
     let body = req.body
-    res.status(200).send(`<b style="color:crimson;">Se registro con exito a la artesana: ${body}</b>`)
+
+    let artesana = new Artesana()
+    artesana.name = body.name
+    artesana.phone = body.phone
+
+    artesana.save((err, artesanaStored) => {
+        if(err) res.status(500).send({message: `error al guardar en la db: ${err}`})
+
+        res.status(200).send({artesana: artesanaStored})
+    })
 })
 
 // Registro de un pedido
 
 app.post('/pedidos', (req,res) => {
     let body = req.body
-    res.status(200).send(`<b style="color:crimson;">Se registro con exito el pedido: ${body}</b>`)
+
+    let pedido = new Pedido()
+
+    pedido.name = body.name
+    pedido.qty = body.qty
+    pedido.comunidad = body.comunidad
+    pedido.fechaDeEntrega = new Date(body.fechaDeEntrega)
+
+    pedido.save((err, pedidoStored) => {
+        if(err) res.status(500).send({message: `error al guardar en la db: ${err}`})
+
+        res.status(200).send({pedido: pedidoStored})
+    })
+   
   })
 
 /* ----------------------------------------------------- */
@@ -122,7 +147,7 @@ app.delete('/pedidos/:id', (req,res) => {
 })
 
 
-mongoose.connect('mongodb+srv://niwok:***********@cluster0.cyfup.mongodb.net/niwok?retryWrites=true&w=majority', (err, res) => {
+mongoose.connect('mongodb+srv://niwok:*****************@cluster0.cyfup.mongodb.net/niwok?retryWrites=true&w=majority', (err, res) => {
     if(err) {
         return console.log('Error al conectar con la base de datos')
     }
