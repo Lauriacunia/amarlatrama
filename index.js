@@ -33,8 +33,17 @@ app.get('/artesanas', (req, res) =>{
 })
 
 // get by Id --> devuelve una artesana, busca por id
-app.get('/artesanas/:id?', (req,res) => {
-  res.status(200).send(`<b>Buscando artesana por id</b>`) 
+app.get('/artesanas/:id', (req,res) => {
+  
+    let artesanaId = req.params.id
+
+    Artesana.findById(artesanaId, (err, artesana) =>{
+        if(err) return res.status(500).send({message: `Error al buscar la artesana por Id: ${id} `})
+        if(!artesana) return res.status(404).send({message: 'La artesana buscada no existe en nuestra base de datos'})
+
+        res.status(200).send({ artesana })
+    })
+
 })
 
 
@@ -49,6 +58,17 @@ app.get('/pedidos', (req,res) => {
     res.status(200).send(`<b>Estos son todos los pedidos</b>`) 
   })
 
+// get pedidos por id
+app.get('/pedidos/:id', (req,res) => {
+    let pedidoId = req.params.id
+
+    Pedido.findById(pedidoId, (err, pedido) =>{
+        if(err) return res.status(500).send({message: `Error al buscar el pedido por Id: ${id} `})
+        if(!pedido) return res.status(404).send({message: 'El pedido buscado no existe en nuestra base de datos'})
+
+        res.status(200).send({ pedido })
+    })
+  })
 
 // get pedidos por comunidad
 
@@ -147,7 +167,7 @@ app.delete('/pedidos/:id', (req,res) => {
 })
 
 
-mongoose.connect('mongodb+srv://niwok:*************@cluster0.cyfup.mongodb.net/niwok?retryWrites=true&w=majority', (err, res) => {
+mongoose.connect('mongodb+srv://niwok:YqTbwsTwT1FgBlCA@cluster0.cyfup.mongodb.net/niwok?retryWrites=true&w=majority', (err, res) => {
     if(err) {
         return console.log('Error al conectar con la base de datos')
     }
