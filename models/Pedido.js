@@ -4,9 +4,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const PedidoSchema = Schema({
+    media: String,
     name: String,
-    qty: Number,
-    comunidad: String,
+    descripcion: String,
+    especificaciones: String,
+    cantidad: Number,
+    comunidad: Number,
     fechaDeEntrega: Date
 })
 
